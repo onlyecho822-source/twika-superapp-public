@@ -228,16 +228,118 @@
 
     /* COMPARISON */
     .compare-section { padding: 5rem 2rem; }
-    .compare-table { width: 100%; border-collapse: collapse; margin-top: 2.5rem; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,0.08); }
-    .compare-table th { padding: 1.2rem 1.5rem; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
-    .compare-table th:first-child { background: var(--off-white); color: var(--muted); text-align: left; }
-    .compare-table th.them { background: #f5f5f5; color: var(--muted); text-align: center; }
-    .compare-table th.us { background: var(--navy); color: var(--cyan); text-align: center; }
-    .compare-table td { padding: 1rem 1.5rem; font-size: 0.9rem; border-bottom: 1px solid var(--border); }
-    .compare-table td:first-child { color: var(--muted); font-weight: 600; }
-    .compare-table td.them { text-align: center; color: #e53935; background: #fff9f9; }
-    .compare-table td.us { text-align: center; color: var(--green); background: #f0fff4; font-weight: 700; }
+    .compare-table {
+      width: 100%; border-collapse: separate; border-spacing: 0;
+      margin-top: 2.5rem; border-radius: 20px; overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+      table-layout: fixed;
+    }
+    /* Dimension label column */
+    .compare-table th:first-child { background: var(--off-white); color: var(--muted); text-align: left; padding: 1.2rem 1.5rem; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
+    .compare-table th.them { background: #f0f0f0; color: #999; text-align: center; padding: 1.2rem 1.5rem; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
+    /* TWIKA column header — glowing navy with cyan text */
+    .compare-table th.us {
+      background: var(--navy);
+      color: var(--cyan);
+      text-align: center;
+      padding: 1.4rem 1.5rem;
+      font-size: 0.95rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      position: relative;
+      box-shadow: inset 0 -4px 0 var(--cyan);
+    }
+    .compare-table th.us::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      animation: shimmer 2.5s infinite;
+    }
+    @keyframes shimmer {
+      0% { opacity: 0.4; transform: scaleX(0.6); }
+      50% { opacity: 1; transform: scaleX(1); }
+      100% { opacity: 0.4; transform: scaleX(0.6); }
+    }
+    /* Regular cells */
+    .compare-table td {
+      padding: 1rem 1.5rem; font-size: 0.88rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    /* Dimension label cells */
+    .compare-table td:first-child {
+      color: var(--navy); font-weight: 700; font-size: 0.9rem;
+      background: var(--off-white);
+      position: relative; cursor: help;
+    }
+    /* Tooltip trigger */
+    .compare-table td:first-child .tip-icon {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--border); color: var(--muted);
+      font-size: 0.65rem; font-weight: 900; margin-left: 6px;
+      cursor: help; vertical-align: middle; flex-shrink: 0;
+      transition: background 0.2s, color 0.2s;
+    }
+    .compare-table td:first-child:hover .tip-icon { background: var(--cyan); color: var(--white); }
+    /* Tooltip box */
+    .tooltip-wrap { position: relative; display: inline; }
+    .tooltip-wrap .tooltip-box {
+      visibility: hidden; opacity: 0;
+      position: absolute; left: 0; top: calc(100% + 8px); z-index: 200;
+      background: var(--navy); color: var(--white);
+      font-size: 0.78rem; font-weight: 500; line-height: 1.5;
+      padding: 0.65rem 0.9rem; border-radius: 10px;
+      width: 220px; box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+      pointer-events: none; transition: opacity 0.2s;
+      border-left: 3px solid var(--cyan);
+    }
+    .tooltip-wrap .tooltip-box::before {
+      content: ''; position: absolute; top: -6px; left: 16px;
+      border: 6px solid transparent; border-bottom-color: var(--navy);
+      border-top: none;
+    }
+    .tooltip-wrap:hover .tooltip-box { visibility: visible; opacity: 1; }
+    /* Competitor cells */
+    .compare-table td.them {
+      text-align: center; color: #c62828;
+      background: #fff5f5; font-size: 0.85rem;
+    }
+    .compare-table td.them .x-mark {
+      display: inline-block; width: 20px; height: 20px; border-radius: 50%;
+      background: #fce4e4; color: #c62828;
+      font-size: 0.75rem; font-weight: 900; line-height: 20px;
+      margin-right: 4px; vertical-align: middle;
+    }
+    /* TWIKA winner cells — glowing green with animated checkmark */
+    .compare-table td.us {
+      text-align: center;
+      background: linear-gradient(135deg, rgba(0,200,83,0.08), rgba(0,180,216,0.06));
+      color: #007A30; font-weight: 800; font-size: 0.88rem;
+      border-left: 3px solid rgba(0,200,83,0.35);
+      border-right: 3px solid rgba(0,200,83,0.35);
+    }
+    .compare-table td.us .check {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: linear-gradient(135deg, #00C853, #00A040);
+      color: var(--white); font-size: 0.7rem; font-weight: 900;
+      margin-right: 5px; vertical-align: middle;
+      box-shadow: 0 2px 8px rgba(0,200,83,0.4);
+      flex-shrink: 0;
+    }
+    /* Last row — no bottom border */
     .compare-table tr:last-child td { border-bottom: none; }
+    /* Winner column top/bottom border glow */
+    .compare-table thead tr th.us { border-radius: 0; }
+    .compare-table tbody tr:first-child td.us { }
+    .compare-table tbody tr:last-child td.us { border-bottom: 3px solid rgba(0,200,83,0.35); }
+    /* Row hover */
+    .compare-table tbody tr { transition: background 0.15s; }
+    .compare-table tbody tr:hover td:first-child { background: #edf4ff; }
+    .compare-table tbody tr:hover td.them { background: #fff0f0; }
+    .compare-table tbody tr:hover td.us { background: linear-gradient(135deg, rgba(0,200,83,0.14), rgba(0,180,216,0.1)); }
 
     /* DRIVER */
     .driver-section {
@@ -571,51 +673,86 @@
           <th></th>
           <th class="them">Uber / DoorDash</th>
           <th class="them">Instacart</th>
-          <th class="us">TWIKA ✓</th>
+          <th class="us">⚡ TWIKA — The Winner</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Price set by</td>
-          <td class="them">Algorithm (you pay what it says)</td>
-          <td class="them">Algorithm + markup</td>
-          <td class="us">Workers bid — you pick</td>
+          <td>
+            <span class="tooltip-wrap">Price Set By
+              <span class="tip-icon">?</span>
+              <span class="tooltip-box">Who decides what you pay? On Uber and DoorDash, a proprietary algorithm sets the price and you have no say. On TWIKA, workers compete by submitting their own bids — you choose the one you want.</span>
+            </span>
+          </td>
+          <td class="them"><span class="x-mark">✕</span>Algorithm — take it or leave it</td>
+          <td class="them"><span class="x-mark">✕</span>Algorithm + hidden markup</td>
+          <td class="us"><span class="check">✓</span>Workers bid — you always pick</td>
         </tr>
         <tr>
-          <td>Surge pricing</td>
-          <td class="them">Yes — up to 3–5× base</td>
-          <td class="them">Yes</td>
-          <td class="us">Never. Not possible.</td>
+          <td>
+            <span class="tooltip-wrap">Surge Pricing
+              <span class="tip-icon">?</span>
+              <span class="tooltip-box">Surge pricing multiplies your fare during busy periods — sometimes 3–5× the base rate. TWIKA's reverse-auction model makes surge pricing structurally impossible: workers always bid down, never up.</span>
+            </span>
+          </td>
+          <td class="them"><span class="x-mark">✕</span>Yes — up to 3–5× base fare</td>
+          <td class="them"><span class="x-mark">✕</span>Yes — demand-based pricing</td>
+          <td class="us"><span class="check">✓</span>Never. Structurally impossible.</td>
         </tr>
         <tr>
-          <td>Item markup</td>
+          <td>
+            <span class="tooltip-wrap">Item Markup
+              <span class="tip-icon">?</span>
+              <span class="tooltip-box">Instacart charges 15–30% above store prices on every item in your cart, on top of the delivery fee. TWIKA charges zero markup — you pay exactly what the store charges, nothing more.</span>
+            </span>
+          </td>
           <td class="them">N/A</td>
-          <td class="them">15–30% on every item</td>
-          <td class="us">Zero. Store price only.</td>
+          <td class="them"><span class="x-mark">✕</span>15–30% on every item</td>
+          <td class="us"><span class="check">✓</span>Zero. Exact store price only.</td>
         </tr>
         <tr>
-          <td>Worker keeps</td>
-          <td class="them">40–60% of fare</td>
-          <td class="them">40–50%</td>
-          <td class="us">80% of every bid</td>
+          <td>
+            <span class="tooltip-wrap">Worker Keeps
+              <span class="tip-icon">?</span>
+              <span class="tooltip-box">Uber and DoorDash take 40–60% of every fare, leaving workers with less than half of what you paid. TWIKA takes a flat platform fee and workers keep 80% — the highest rate in the industry.</span>
+            </span>
+          </td>
+          <td class="them"><span class="x-mark">✕</span>40–60% of fare</td>
+          <td class="them"><span class="x-mark">✕</span>40–50% of earnings</td>
+          <td class="us"><span class="check">✓</span>80% of every bid — highest in industry</td>
         </tr>
         <tr>
-          <td>Services</td>
-          <td class="them">1 (rides or food)</td>
-          <td class="them">1 (grocery)</td>
-          <td class="us">6 in one app</td>
+          <td>
+            <span class="tooltip-wrap">Number of Services
+              <span class="tip-icon">?</span>
+              <span class="tooltip-box">Uber does rides. DoorDash does food. Instacart does grocery. Each requires a separate app, separate account, separate payment. TWIKA does all 6 — Rideshare, Food, Grocery, Laundry, Medical, Car Rental — in one app.</span>
+            </span>
+          </td>
+          <td class="them"><span class="x-mark">✕</span>1 service per app</td>
+          <td class="them"><span class="x-mark">✕</span>1 service only</td>
+          <td class="us"><span class="check">✓</span>6 services — one app, one account</td>
         </tr>
         <tr>
-          <td>Price transparency</td>
-          <td class="them">Final price shown after booking</td>
-          <td class="them">Markup hidden in item prices</td>
-          <td class="us">Full breakdown before you confirm</td>
+          <td>
+            <span class="tooltip-wrap">Price Transparency
+              <span class="tip-icon">?</span>
+              <span class="tooltip-box">On most platforms, the final price is only revealed after you've committed to the booking. TWIKA shows you the full breakdown — base fare, distance charge, tax, and total — before you post the job.</span>
+            </span>
+          </td>
+          <td class="them"><span class="x-mark">✕</span>Final price shown after booking</td>
+          <td class="them"><span class="x-mark">✕</span>Markup hidden inside item prices</td>
+          <td class="us"><span class="check">✓</span>Full line-item breakdown upfront</td>
         </tr>
         <tr>
-          <td>Worker bidding</td>
-          <td class="them">No</td>
-          <td class="them">No</td>
-          <td class="us">Yes — real competition</td>
+          <td>
+            <span class="tooltip-wrap">Worker Bidding
+              <span class="tip-icon">?</span>
+              <span class="tooltip-box">No other major gig platform allows workers to bid for jobs. TWIKA's reverse-auction engine creates real price competition — workers lower their bids to win your job, which means you always get the market's best available rate.</span>
+            </span>
+          </td>
+          <td class="them"><span class="x-mark">✕</span>No — price is fixed by platform</td>
+          <td class="them"><span class="x-mark">✕</span>No — platform controls pricing</td>
+          <td class="us"><span class="check">✓</span>Yes — real-time competitive bidding</td>
         </tr>
       </tbody>
     </table>
