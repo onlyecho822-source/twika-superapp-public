@@ -113,6 +113,25 @@ We are not here to extract. We are here to connect. The money stays in the commu
 
 ---
 
+## We Are The Continental Hotel
+
+> "No business is conducted on these premises."
+> — The Continental Hotel, John Wick
+
+In John Wick, the Continental Hotel is the one place in the world where the rules hold. Where every faction — no matter how powerful, no matter how dangerous — comes to conduct their affairs under a single agreement. The Continental does not take sides. It does not favor the buyer over the seller. It does not surge the price when demand is high.
+
+The Continental is neutral ground. Sacred ground. And everyone who walks through the door agrees to the rules before they enter.
+
+**That is MiddleMan.**
+
+We control the final agreement. Not the price — the worker and the customer decide that. Not the service — the community decides what is needed. But the agreement itself — the moment when two people shake hands through our platform — that is ours. That is sacred. And it is sealed with a proof hash.
+
+When you post a job on MiddleMan, you are walking through the door of the Continental. When you place a bid, you are making a commitment on the floor. When the agreement is sealed, it is final. No one walks away from a sealed agreement without consequence.
+
+We are not the worker. We are not the customer. We are the floor they both stand on.
+
+---
+
 ## The Name
 
 **MiddleMan.**
@@ -122,6 +141,8 @@ Not because we are in the way. But because we are the way through.
 The old middleman took your money and gave you nothing. We take a small fee and give you everything — access, trust, speed, fairness, and the freedom to do business on your own terms.
 
 **We removed the middleman by becoming the MiddleMan.**
+
+**We are The Continental Hotel for the global working class.**
 
 ---
 
